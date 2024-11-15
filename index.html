@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>PHP + Prolog</title>
+    </head>
+    <body>
+        <form method="POST" action="prolog.php" id="form">
+            <p>Introdueix, a cada línia qui és ascendent (directe) de qui.</p>
+            <p>Per exemple: pare/mare -> fill/filla:</p>
+            <textarea name="familia" cols="30" rows="10">joana -> miquel
+toni -> miquel
+toni -> maria
+miquel -> aina
+miquel -> gloria
+gloria -> jaume</textarea><br>
+            <label>Què vols saber: </label>Antecessor <input type="text" value="miquel" name="vell"> de <input type="text" value="jaume" name="jove">?<br>
+            <label>Vull saber: </label><input type="radio" name="tipus_pregunta" id="correcte_o_no" value="correcte_o_no" checked><label for="correcte_o_no">si és correcte o no</label>
+            <input type="radio" name="tipus_pregunta" id="totes_les_solucions" value="totes_les_solucions"><label for="totes_les_solucions">totes les solucions</label><br><br>
+            <button type="submit">Demana a Prolog!</button>
+        </form>
+        <pre id="sortida">
+
+        </pre>
+        <script>
+            const form = document.getElementById('form');
+            form.addEventListener("submit", async function submit(event) {
+                event.preventDefault(); // que no s'enviï, ho farem amb AJAX.
+                const data = new FormData(event.target);
+                try {
+                    const response = await fetch(event.target.action, {
+                        method: event.target.method,
+                        body: data,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    const json = await response.json();
+                    const error = json.error;
+                    if (error) {
+                        document.getElementById("sortida").textContent = "Error: " + error;
+                    } else {
+                        const text = json.text;
+                        document.getElementById("sortida").textContent = text;
+                    }
+                } catch (error) {
+                    document.getElementById("sortida").textContent = "Hi ha hagut algun error: " + error;
+                }
+            });
+        </script>
+    </body>
+</html>
