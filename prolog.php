@@ -44,9 +44,10 @@ if ($tipus_pregunta === 'correcte_o_no') {
     /*
     Aquí se complica: -- $vell i $jove poden ser simbols o variables, així hauria d'anar bé
     findall([$vell,$jove],antecessor($vell,$jove),L),
-    maplist(writeln,L)
+    write(L)
     */
-    $goal = "findall([$vell,$jove]," . $goal . ",L),maplist(writeln,L)";
+    // en comptes de write(L), se pot fer servir maplist(writeln,L) per imprimir cada element un a cada línia
+    $goal = "findall([$vell,$jove]," . $goal . ",L),write(L)";
 }
 
 // Fitxer temporal per desar-hi les dades de la família
