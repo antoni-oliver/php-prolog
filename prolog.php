@@ -61,7 +61,7 @@ Executam swipl:
 $nomfitxer: primer fitxer: la base de coneixements
 antecessor.pl: segon fitxer: les regles prolog fixes
 */
-exec("swipl -q -g $goal -t halt $nomfitxer antecessor.pl", $output, $status);
+exec("swipl -q -g \"$goal\" -t halt $nomfitxer antecessor.pl", $output, $status);
 
 header('Content-Type: application/json');
 if ($tipus_pregunta === 'correcte_o_no') {
